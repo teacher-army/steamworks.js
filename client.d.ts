@@ -111,6 +111,10 @@ export declare namespace input {
     getAnalogActionVector(actionHandle: bigint): AnalogActionVector
     getType(): InputType
     getHandle(): bigint
+    showBindingPanel(): boolean
+    getDigitalActionOrigins(actionSetHandle: bigint, digitalActionHandle: bigint): Array<bigint>
+    /** Get analog action origins for the specified action and action set. */
+    getAnalogActionOrigins(actionSetHandle: bigint, analogActionHandle: bigint): Array<bigint>
   }
 }
 export declare namespace localplayer {
@@ -336,6 +340,7 @@ export declare namespace workshop {
    * @returns an array of subscribed workshop item ids
    */
   export function getSubscribedItems(): Array<bigint>
+  export function deleteItem(itemId: bigint): Promise<void>
   export const enum UGCQueryType {
     RankedByVote = 0,
     RankedByPublicationDate = 1,

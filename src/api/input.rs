@@ -94,6 +94,52 @@ pub mod input {
         pub fn get_handle(&self) -> BigInt {
             self.handle.clone()
         }
+
+
+        #[napi]
+        pub fn show_binding_panel(&self) -> bool {
+            let client = crate::client::get_client();
+            client.input().show_binding_panel(self.handle.get_u64().1)
+        }
+
+        #[napi]
+        pub fn get_digital_action_origins(
+            &self,
+            action_set_handle: BigInt,
+            digital_action_handle: BigInt,
+        ) -> Vec<BigInt> {
+            let client = crate::client::get_client();
+            let origins = client.input().get_digital_action_origins(
+                self.handle.get_u64().1,
+                action_set_handle.get_u64().1,
+                digital_action_handle.get_u64().1,
+            );
+
+            origins
+                .iter()
+                .map(|&origin| BigInt::from(origin as i64)) // Cast to BigInt
+                .collect()
+        }
+
+        /// Get analog action origins for the specified action and action set.
+        #[napi]
+        pub fn get_analog_action_origins(
+            &self,
+            action_set_handle: BigInt,
+            analog_action_handle: BigInt,
+        ) -> Vec<BigInt> {
+            let client = crate::client::get_client();
+            let origins = client.input().get_analog_action_origins(
+                self.handle.get_u64().1,
+                action_set_handle.get_u64().1,
+                analog_action_handle.get_u64().1,
+            );
+
+            origins
+                .iter()
+                .map(|&origin| BigInt::from(origin as i64)) // Cast to BigInt
+                .collect()
+        }
     }
 
     #[napi(object)]
