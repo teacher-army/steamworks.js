@@ -92,7 +92,7 @@ Click "activate overlay" to test the overlay.
 - Перед мержем ПРа в main, необходимо обновить файлы сборки в директории `/dist`
 - Необходимо загрузить архив с собранной сборкой из github экшена `Build Only / upload-build-artifacts`
   - ![Download Build Artifacts](./docs/images/dev-download-build.PNG)
-- Удалить старую папку `/dist`, заменив её на новую из архива и закоммитить изменения
+- Обновить папку `/dist` на содержимое из архива и закоммитить изменения
 
 ## Финальная сборка
 
