@@ -87,3 +87,27 @@ jobs:
           name: binaries-macos
           path: dist
           if-no-files-found: error
+  upload-build-artifacts:
+    needs: [build-windows, build-linux, build-mac]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: binaries-windows
+          path: dist
+      - uses: actions/download-artifact@v4
+        with:
+          name: binaries-linux
+          path: dist
+      - uses: actions/download-artifact@v4
+        with:
+          name: binaries-macos
+          path: dist
+      - name: Archive dist/
+        run: |
+          zip -r build-all-platforms.zip dist
+      - name: Upload all-platforms dist
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-all-platforms
+          path: build-all-platforms.zip
