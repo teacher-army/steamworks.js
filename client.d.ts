@@ -104,6 +104,7 @@ export declare namespace input {
   export function getActionSet(actionSetName: string): bigint
   export function getDigitalAction(actionName: string): bigint
   export function getAnalogAction(actionName: string): bigint
+  export function getGlyphForActionOrigin(origin: bigint): string
   export function shutdown(): void
   export class Controller {
     activateActionSet(actionSetHandle: bigint): void
