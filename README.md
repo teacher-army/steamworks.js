@@ -86,3 +86,16 @@ There is no way to build for all targets easily. The good news is that you don't
 Go to the [test/electron](./test/electron) directory. There, you can run `npm install` and then `npm start` to run the Electron app.
 
 Click "activate overlay" to test the overlay.
+
+## Разработка
+
+- Перед мержем ПРа в main, необходимо обновить файлы сборки в директории `/dist`
+- Необходимо загрузить архив с собранной сборкой из github экшена `Build Only / upload-build-artifacts`
+  - ![Download Build Artifacts](./docs/images/dev-download-build.PNG)
+- Обновить папку `/dist` на содержимое из архива и закоммитить изменения
+
+## Финальная сборка
+
+- На этапе разработки для экономии ресурсов была отключена сборка под macOS, поэтому необходимо её включить
+- В файле `./.github/workflows/build.yml` необходимо раскомментировать строки связанные со сборкой macOS
+- По [инструкции](#разработка) обновить файлы сборки в репозитории
