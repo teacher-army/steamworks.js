@@ -34,6 +34,7 @@ jobs:
           name: binaries-windows
           path: dist
           if-no-files-found: error
+          retention-days: 3
   build-linux:
     runs-on: ubuntu-latest
     container:
@@ -61,6 +62,7 @@ jobs:
           name: binaries-linux
           path: dist
           if-no-files-found: error
+          retention-days: 3
 #  build-mac:
 #    runs-on: macos-latest
 #    steps:
@@ -87,6 +89,7 @@ jobs:
 #          name: binaries-macos
 #          path: dist
 #          if-no-files-found: error
+#          retention-days: 3
   upload-build-artifacts:
 #    needs: [build-windows, build-linux, build-mac]
     needs: [build-windows, build-linux]
@@ -104,11 +107,15 @@ jobs:
 #        with:
 #          name: binaries-macos
 #          path: dist
-      - name: Archive dist/
+      - name: Unpack all artifacts into dist/
         run: |
-          zip -r build-all-platforms.zip dist
+          for f in dist/*.zip; do
+          unzip -o "$f" -d dist
+          rm "$f"
+          done
       - name: Upload all-platforms dist
         uses: actions/upload-artifact@v4
         with:
           name: build-all-platforms
-          path: build-all-platforms.zip
+          path: dist
+          retention-days: 3
