@@ -3,6 +3,7 @@ use napi_derive::napi;
 #[napi]
 pub mod input {
     use napi::bindgen_prelude::BigInt;
+    use steamworks::EInputActionOrigin;
 
     #[napi(string_enum)]
     pub enum InputType {
@@ -183,6 +184,14 @@ pub mod input {
     pub fn get_analog_action(action_name: String) -> BigInt {
         let client = crate::client::get_client();
         BigInt::from(client.input().get_analog_action_handle(&action_name))
+    }
+
+    #[napi]
+    pub fn get_glyph_for_action_origin(origin: BigInt) -> String {
+        let origin_value = origin.get_u64().1 as u32; // Convert BigInt to u32
+        let origin_enum = unsafe { std::mem::transmute::<u32, EInputActionOrigin>(origin_value) }; // Convert u32 to EInputActionOrigin
+        let client = crate::client::get_client();
+        client.input().get_glyph_for_action_origin(origin_enum)
     }
 
     #[napi]
